@@ -1,0 +1,140 @@
+<Manager>:
+    id: screen_manager
+    
+    screen_one: screen_one
+    screen_two: screen_two
+    
+    CalculateScreen:
+        id: screen_one
+        name: "calculator"
+        manager: screen_manager
+    
+    ResultScreen:
+        id: screen_two
+        name: "result"
+        manager: screen_manager
+        
+
+<CalculateScreen>
+    name: "calculator"
+    
+    start_distance: start_distance
+    finish_distance: finish_distance
+    start_gasoline: start_gasoline
+    added_fuel: added_fuel
+    normal_consumption: normal_consumption
+    
+      
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+        
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "Километраж до выезда из гаража"
+            TextInput:
+                id: start_distance
+                multiline: False
+        
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "Километраж после возвращения"
+            TextInput:
+                id: finish_distance
+                multiline: False
+        
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "Остаток газа до выезда"
+            TextInput:
+                id: start_gasoline
+                multiline: False
+        
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "Заправка"
+            TextInput:
+                id: added_fuel
+                multiline: False
+        
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "Расход по норме"
+            TextInput:
+                id: normal_consumption
+                multiline: False
+    
+        Button:
+            text:'Рассчитать'
+            on_press:
+                root.calculations()
+                root.set_values()
+            on_release: root.manager.current = "result"
+        
+            
+        
+<ResultScreen>
+    name: "result"
+    
+    
+    day_distance_result: day_distance_result
+    daily_consumption_result: daily_consumption_result
+    gasoline_after_result: gasoline_after_result
+    
+    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+    
+        BoxLayout:
+            orientation: 'vertical'
+            Label
+                text: "Километраж за сутки"
+                bold: True
+            Label:
+                text: "0"
+                bold: True
+                font_size: '30sp'
+                id: day_distance_result
+        
+        BoxLayout:
+            orientation: 'vertical'
+            Label
+                text: "Фактический расход"
+                bold: True
+            Label:
+                font_size: '30sp'
+                text: "0"
+                bold: True
+                id: daily_consumption_result
+    
+        BoxLayout:
+            orientation: 'vertical'
+            Label
+                text: "Остаток газа после возвращения"
+                bold: True
+            Label:
+                font_size: '30sp'
+                bold: True
+                text: "0"
+                id: gasoline_after_result
+        
+        
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1.0, 0.7
+        
+            Button:
+                text: 'Выйти'
+                on_press: app.stop()
+            Button:
+                text: 'Пересчитать'
+                on_release: root.manager.current = "calculator"
+        
